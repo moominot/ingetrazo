@@ -585,6 +585,10 @@ class MainWindow(QMainWindow):
 
     def __init__(self, defer_extensions: bool = False) -> None:
         super().__init__()
+        # The wheel changes no field that was not picked, in any panel or
+        # window (#1483). Before any widget is built.
+        from views.wheel_guard import install_wheel_guard
+        install_wheel_guard()
         # main.py passes True: the plugins' setup runs once the window is up
         # (see load_extensions). Set first — the menu bar is built below.
         self._defer_extensions = bool(defer_extensions)

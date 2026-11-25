@@ -121,6 +121,8 @@ def test_every_field_of_the_side_panel_is_guarded(monkeypatch):
         fields = [f for kind in (QAbstractSpinBox, QComboBox, QSlider)
                   for f in panel.findChildren(kind)]
         assert len(fields) > 50
+        for field in fields:
+            field.ensurePolished()      # as Qt does before showing it
         assert all(f.focusPolicy() == Qt.StrongFocus for f in fields)
     finally:
         _close(win)
